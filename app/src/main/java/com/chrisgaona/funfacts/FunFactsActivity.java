@@ -1,7 +1,11 @@
 package com.chrisgaona.funfacts;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,11 +16,20 @@ public class FunFactsActivity extends AppCompatActivity {
     // Declare our view variables
     private TextView mFactTextView;
     private Button mShowFactButton;
+    private static final String TAG = "FunFactsActivity";
+
+    public boolean isOnline() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fun_facts);
+
+        Log.i(TAG, isOnline() + "");
 
         // Assign the Views from the layout file to the corresponding variables
         final TextView mFactTextView = (TextView) findViewById(R.id.factTextView);
