@@ -25,7 +25,7 @@ public class FunFactsActivity extends AppCompatActivity {
     private TextView mFactTextView;
     private Button mShowFactButton;
     private ConstraintLayout mConstraintLayout;
-    private static final String TAG = "FunFactsActivity";
+    private static final String TAG = FunFactsActivity.class.getSimpleName();
 
 //    public boolean isOnline() {
 //        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -62,6 +62,7 @@ public class FunFactsActivity extends AppCompatActivity {
 
         mShowFactButton.setOnClickListener(listener);
 
-        Toast.makeText(this, "Yay! Our Activity was created.", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Yay! Our Activity was created.", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "We're logging from the onCreate() method");
     }
 }
