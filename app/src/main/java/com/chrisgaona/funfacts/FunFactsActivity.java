@@ -17,6 +17,8 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class FunFactsActivity extends AppCompatActivity {
+    private static final String KEY_FACT = "KEY_FACT";
+    private static final String KEY_COLOR = "KEY_COLOR";
     // Declare our view variables
     private NetworkReceiver mNetworkReceiver = new NetworkReceiver();
     private FactBook mFactBook = new FactBook();
@@ -26,12 +28,22 @@ public class FunFactsActivity extends AppCompatActivity {
     private Button mShowFactButton;
     private ConstraintLayout mConstraintLayout;
     private static final String TAG = FunFactsActivity.class.getSimpleName();
+    private String mFact;
+    private int mColor;
 
 //    public boolean isOnline() {
 //        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 //        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 //        return (networkInfo != null && networkInfo.isConnected());
 //    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(KEY_FACT, mFact);
+        outState.putInt(KEY_COLOR, mColor);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +60,15 @@ public class FunFactsActivity extends AppCompatActivity {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String fact = mFactBook.getFact();
+                mFact = mFactBook.getFact();
 
                 // update the screen with our dynamic fact
-                mFactTextView.setText(fact);
+                mFactTextView.setText(mFact);
                 // update the screen with dynamic background color
-                int color = mColorWheel.getColor();
-                mConstraintLayout.setBackgroundColor(color);
+                mColor = mColorWheel.getColor();
+                mConstraintLayout.setBackgroundColor(mColor);
 
-                mShowFactButton.setTextColor(color);
+                mShowFactButton.setTextColor(mColor);
             }
         };
 
