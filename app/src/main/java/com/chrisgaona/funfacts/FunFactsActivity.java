@@ -39,8 +39,10 @@ public class FunFactsActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        // this method is used to save state during orientation change of app
         super.onSaveInstanceState(outState);
 
+        // save certain items to be retrieved after orientation change of app on same activity
         outState.putString(KEY_FACT, mFact);
         outState.putInt(KEY_COLOR, mColor);
     }
