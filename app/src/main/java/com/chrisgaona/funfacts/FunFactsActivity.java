@@ -17,8 +17,10 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class FunFactsActivity extends AppCompatActivity {
+    // these are constant variables
     private static final String KEY_FACT = "KEY_FACT";
     private static final String KEY_COLOR = "KEY_COLOR";
+
     // Declare our view variables
     private NetworkReceiver mNetworkReceiver = new NetworkReceiver();
     private FactBook mFactBook = new FactBook();
@@ -28,8 +30,10 @@ public class FunFactsActivity extends AppCompatActivity {
     private Button mShowFactButton;
     private ConstraintLayout mConstraintLayout;
     private static final String TAG = FunFactsActivity.class.getSimpleName();
-    private String mFact;
-    private int mColor;
+    // assign mFact initially
+    private String mFact = mFactBook.mFacts[0];
+    // need to parse color to convert the string to an int
+    private int mColor = Color.parseColor(mColorWheel.mColors[8]);
 
 //    public boolean isOnline() {
 //        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -38,11 +42,26 @@ public class FunFactsActivity extends AppCompatActivity {
 //    }
 
     @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        // used to access saved instance state bundle
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // retrieve by using the same key to save
+        mFact = savedInstanceState.getString(KEY_FACT);
+        mFactTextView.setText(mFact);
+        mColor = savedInstanceState.getInt(KEY_COLOR);
+        mConstraintLayout.setBackgroundColor(mColor);
+        mShowFactButton.setTextColor(mColor);
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         // this method is used to save state during orientation change of app
+        // save instance state bundle
         super.onSaveInstanceState(outState);
 
         // save certain items to be retrieved after orientation change of app on same activity
+        // use constants as the key
         outState.putString(KEY_FACT, mFact);
         outState.putInt(KEY_COLOR, mColor);
     }
